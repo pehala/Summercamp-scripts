@@ -69,7 +69,7 @@ def main():
         previous = person
 
     person = people[0]
-    while person.after is not None:
+    while person is not None:
         front_page = create_svg()
         elements = [
             Line(y1="148.5", y2="148.5", x1=0, x2=210, class_=["dashed"]),
