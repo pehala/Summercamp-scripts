@@ -40,6 +40,7 @@ def create_svg():
             text=dedent(
                 """
                         .small { font: 3.88056px sans-serif; }
+                        .normal { font: 9px sans-serif; }
                         .big { font: 10.5833px sans-serif; }
                         .dashed { stroke-width: 1; stroke-dasharray: 0.5; stroke: black; }
                         .line { stroke-width: 2; stroke: black;}
@@ -100,7 +101,7 @@ def main():
                 y=237,
                 x=105,
                 text_anchor="middle",
-                class_=["big"],
+                class_=["normal"],
                 text=person.word,
             ),
         ]
