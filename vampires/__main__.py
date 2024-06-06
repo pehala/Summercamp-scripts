@@ -134,12 +134,11 @@ def main():
 
         cover_page = create_svg()
         elements = [
-            Line(y1="118.5", y2="118.5", x1=0, x2=210, class_=["dashed"]),
+            Line(y1="178.5", y2="178.5", x1=0, x2=210, class_=["dashed"]),
             Line(y1="148.5", y2="148.5", x1=0, x2=210, class_=["dashed"]),
             Text(
-                y="-88.5",
-                x=-105,
-                transform="scale(-1, -1)",
+                y=233,
+                x=105,
                 text_anchor="middle",
                 dominant_baseline="text-bottom",
                 class_=["big"],
