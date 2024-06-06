@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "summercamp-scripts"
+version = "0.1.0"
+description = "Collection of scripts, usually generating SVG/PDF for children games for a summer camp"
+authors = ["Petr Hála <phala@sprtovo.eu>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+google-api-python-client = "^2.130.0"
+google-auth-oauthlib = "^1.2.0"
+svg-py = "^1.4.3"
+black = "^24.4.2"
+cairosvg = "^2.7.1"
+
+# Black
+[tool.black]
+line-length = 120
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
