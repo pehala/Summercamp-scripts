@@ -6,7 +6,7 @@ authors = ["Petr Hála <phala@sprtovo.eu>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.11"
 google-api-python-client = "^2.130.0"
 google-auth-oauthlib = "^1.2.0"
 svg-py = "^1.4.3"
