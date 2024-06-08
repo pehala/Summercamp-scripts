@@ -42,6 +42,7 @@ def create_svg():
                         .small { font: 3.88056px sans-serif; }
                         .normal { font: 9px sans-serif; }
                         .big { font: 10.5833px sans-serif; }
+                        .title { font: 25px sans-serif; }
                         .dashed { stroke-width: 1; stroke-dasharray: 0.5; stroke: black; }
                         .line { stroke-width: 2; stroke: black;}
                     """
@@ -133,11 +134,10 @@ def main():
             Line(y1="178.5", y2="178.5", x1=0, x2=210, class_=["dashed"]),
             Line(y1="148.5", y2="148.5", x1=0, x2=210, class_=["dashed"]),
             Text(
-                y=233,
+                y=243,
                 x=105,
                 text_anchor="middle",
-                dominant_baseline="text-bottom",
-                class_=["big"],
+                class_=["title"],
                 text=person.name,
             ),
         ]
