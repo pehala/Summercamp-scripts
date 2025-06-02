@@ -13,7 +13,7 @@ Output
 
 Scripts are configured from a Google Sheet, meaning credentials for an Application that can read from Sheets are needed.
 For more information see https://developers.google.com/sheets/api/quickstart/python#prerequisites.
-By default, scripts expect secret in a file called `client_secrets.json`
+By default, scripts expect secret in a file called `client_secret.json`
 
 After acquiring the secret, you can run individual scripts like this
 ```bash
