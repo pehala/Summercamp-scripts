@@ -59,7 +59,7 @@ def main():
     output.mkdir(parents=True, exist_ok=True)
 
     loader = GoogleSpreadsheetLoader(client_secret_path=args.secret)
-    people = [Person.from_list(value) for value in loader.get_spreadsheet(args.spreadsheet_id, RANGE)]
+    people = [Person.from_list(value) for value in loader.get_spreadsheet_range(args.spreadsheet_id, RANGE)]
     people.sort(key=lambda x: x.position)
 
     # Create Double-linked linked list

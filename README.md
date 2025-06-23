@@ -1,7 +1,6 @@
 # Summer-camp scripts
 
 Collection of scripts, usually, generating SVG or PDF, for use in summer camp games for children.
-Output
 
 ## Setup
 
@@ -18,11 +17,30 @@ By default, scripts expect secret in a file called `client_secret.json`
 After acquiring the secret, you can run individual scripts like this
 ```bash
 poetry install
-SPREADSHEET=<ID> make <game_name>
+SPREADSHEET=<ID> make <script_name>
 ```
 
-## Games
-
+## Scripts
 Available scripts are:
-`munchkin` - Munchkin-inspired (but has actually very little common with Munchkin) tournament game
-`vampires` - Vampire puzzle game
+
+* `munchkin` - Munchkin-inspired (but has actually very little common with Munchkin) tournament game
+* `vampires` - Vampire puzzle game
+* `program` - Creates program summary for the entire camp
+   * Usage: `SPREADSHEET=<ID> DATE=<DATE> make summary`
+
+## Windows instalation
+
+* Run in Terminal/Powershell
+  ```bash
+  winget install python
+  winget install Git.Git
+  winget install -e --id GnuWin32.Make
+  ```
+* Restart terminal
+  ```bash
+  pip install poetry
+  git clone https://github.com/pehala/Summercamp-scripts.git
+  cd Summercamp-scripts
+  poetry install
+  SPREADSHEET=<ID> make <script_name>
+  ```

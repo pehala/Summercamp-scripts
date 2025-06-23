@@ -29,7 +29,11 @@ class GoogleSpreadsheetLoader:
                 token.write(creds.to_json())
         self.service = build("sheets", "v4", credentials=creds)
 
-    def get_spreadsheet(self, spreadsheet_id: str, range_name: str):
+    def get_spreadsheet_range(self, spreadsheet_id: str, range_name: str):
         sheet = self.service.spreadsheets()
         result = sheet.values().get(spreadsheetId=spreadsheet_id, range=range_name).execute()
         return result.get("values", [])
+
+    def get_spreadsheet(self, spreadsheet_id: str):
+        sheet = self.service.spreadsheets()
+        return sheet.get(spreadsheetId=spreadsheet_id).execute()

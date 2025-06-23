@@ -1,4 +1,4 @@
-.PHONY: commit-acceptance black pylint munchkin vampires
+.PHONY: commit-acceptance black pylint munchkin vampires program
 
 SECRET_FILE ?= client_secret.json
 
@@ -14,6 +14,11 @@ munchkin: ## Generates Munchkin-like cards
 vampires: ## Generates Vampire riddles cards
 	@test -n "$(SPREADSHEET)"
 	poetry run python -m vampires -s $(SECRET_FILE) $(SPREADSHEET)
+
+program: ## Generates program summary of the entire camp
+	@test -n "$(SPREADSHEET)"
+	@test -n "$(DATE)"
+	poetry run python -m program -d $(DATE) -s $(SECRET_FILE) $(SPREADSHEET)
 
 clean: ## Cleans output
 	rm -rf output/

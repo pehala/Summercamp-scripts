@@ -61,10 +61,10 @@ def main():
     args = parse_cli_arguments()
 
     loader = GoogleSpreadsheetLoader(client_secret_path=args.secret)
-    equipment = [Equipment.from_list(value) for value in loader.get_spreadsheet(args.spreadsheet_id, EQUIPMENT_RANGE)]
-    monsters = [Monster.from_list(value) for value in loader.get_spreadsheet(args.spreadsheet_id, MONSTER_RANGE)]
-    curses = [Curse.from_list(value) for value in loader.get_spreadsheet(args.spreadsheet_id, CURSE_RANGE)]
-    bonuses = [Bonus.from_list(value) for value in loader.get_spreadsheet(args.spreadsheet_id, BONUS_RANGE)]
+    equipment = [Equipment.from_list(value) for value in loader.get_spreadsheet_range(args.spreadsheet_id, EQUIPMENT_RANGE)]
+    monsters = [Monster.from_list(value) for value in loader.get_spreadsheet_range(args.spreadsheet_id, MONSTER_RANGE)]
+    curses = [Curse.from_list(value) for value in loader.get_spreadsheet_range(args.spreadsheet_id, CURSE_RANGE)]
+    bonuses = [Bonus.from_list(value) for value in loader.get_spreadsheet_range(args.spreadsheet_id, BONUS_RANGE)]
 
     unique_entities = bonuses + monsters + equipment + curses
     entities = cluster(expand(unique_entities), ROWS * COLUMNS)
