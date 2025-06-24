@@ -1,0 +1,27 @@
+@page {
+    size: A4; /* Change from the default size of A4 */
+    margin: 10mm; /* Set margin on each page */
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+table {
+    border-collapse: collapse;
+}
+table th, table td {
+	padding: 0.4em;
+	border: 1px solid #d0d7de;
+}
+
+tr td:last-child {
+    width: 80%;
+    white-space: nowrap;
+}
+html {
+    font-family: "Cantarell", Helvetica, sans-serif;
+    font-size: 75%;
+}
+p {
+    text-align: justify;
+}

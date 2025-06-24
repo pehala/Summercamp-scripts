@@ -1,20 +1,25 @@
 """Markdown utilities"""
 
+
 def header(level: int, text: str) -> str:
     """Generate a Markdown header."""
     return f"{'#' * level} {text}\n"
+
 
 def centered_header(level: int, text: str) -> str:
     """Generate a Markdown header."""
     return f"<h{level} style='text-align: center;'>{text}</h{level}>\n\n"
 
+
 def list_item(text: str) -> str:
     """Generate a Markdown list item."""
     return f"* {text}\n"
 
+
 def force_page_break() -> str:
     """Generate a Markdown page break."""
     return "<div style='page-break-after: always;'></div>\n"
+
 
 class Table:
     """Generate a Markdown table."""
@@ -35,4 +40,3 @@ class Table:
         separator_row = "| " + " | ".join([":---:"] * len(self.headers)) + " |\n"
         data_rows = "\n".join("| " + " | ".join(row) + " |" for row in self.rows)
         return header_row + separator_row + data_rows + "\n"
-

@@ -8,20 +8,24 @@ class DayPart:
     """
     Represents a part of the day with all its attributes.
     """
+
     name: str
     cth: bool
     values: dict[str, str]
+
 
 class ProgramType(StrEnum):
     MORNING = "Dopo"
     AFTERNOON = "Odpo"
     EVENING = "Večer"
 
+
 @dataclass
 class Day:
     """
     Represents a complete program for the day
     """
+
     day_number: int
     date: datetime
     sheet_name: str
@@ -61,5 +65,5 @@ class Day:
             physical=int(row[0]),
             psychical=int(row[1]),
             theme=row[2].strip(),
-            guarantees=row[3]
+            guarantees=row[3],
         )

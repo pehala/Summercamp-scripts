@@ -11,11 +11,11 @@ from program.entity import DayPart, Day, ProgramType
 from program.markdown import header, list_item, centered_header, Table, force_page_break
 
 SUMMARY_RANGE = "'Přehled'!B2:E15"
-SHEET_PREFIX="den "
+SHEET_PREFIX = "den "
 DAY_PARTS = {"Dopo", "Odpo", "Večer"}
 
-locale.setlocale(locale.LC_ALL, 'cs_CZ.UTF-8')
 logger = logging.getLogger(__name__)
+
 
 def parse_cli_arguments():
     parser = argparse.ArgumentParser(description="Overview generator")
@@ -46,7 +46,9 @@ def main():
     loader = GoogleSpreadsheetLoader(client_secret_path=args.secret)
     sheets = loader.get_spreadsheet(spreadsheet_id=args.spreadsheet_id)["sheets"]
     get_range = partial(loader.get_spreadsheet_range, args.spreadsheet_id)
-    day_names = [sheet["properties"]["title"] for sheet in sheets if sheet["properties"]["title"].startswith(SHEET_PREFIX)]
+    day_names = [
+        sheet["properties"]["title"] for sheet in sheets if sheet["properties"]["title"].startswith(SHEET_PREFIX)
+    ]
 
     days = []
     # Summary parsing will be here
@@ -56,51 +58,50 @@ def main():
         days.append(Day.from_row(row, date, number + 1, day_names[number]))
         date = date + datetime.timedelta(days=1)
 
-
     for day in days:
         rows = get_range(f"'{day.sheet_name}'!A1:I8")
         for i in range(3):
-            start = (i*3)
+            start = i * 3
             day_part_name = rows[start][0].split(":")[0].strip()
             if not day_part_name:
                 logger.warning(f"{i+1} part of the day not found for sheet {day.sheet_name}")
                 continue
 
-            values = {key: value.strip() for key, value in zip(rows[start][1:-1], rows[start+1][1:-1]) if value.strip()}
-            day_part = DayPart(name=day_part_name,
-                          values=values,
-                          cth=rows[start+1][-1] == "TRUE")
+            values = {
+                key: value.strip() for key, value in zip(rows[start][1:-1], rows[start + 1][1:-1]) if value.strip()
+            }
+            day_part = DayPart(name=day_part_name, values=values, cth=rows[start + 1][-1] == "TRUE")
             day.parts[ProgramType(day_part_name)] = day_part
 
     result = ""
-    summary_table = Table(headers=["Den", "Fyzická/Psychická", "Dopo", "Odpo", "Večer", "Garanti"])
+    summary_table = Table(headers=["Den", "Zátěž", "Dopo", "Odpo", "Večer", "Garanti"])
     for day in days:
-        summary_table.add_row([
-            day.get_week_day(),
-            f"{day.physical}/{day.psychical}",
-            day.get_specific_value(ProgramType.MORNING, "Název") or "",
-            day.get_specific_value(ProgramType.AFTERNOON, "Název") or "",
-            day.get_specific_value(ProgramType.EVENING, "Název") or "",
-            day.guarantees
-        ])
-#         result += f"""
-# <div style="display: flex;justify-content: space-between;">
-#   <h4 style="align-self: end">{day.date.strftime('%d.%m.%Y')}</h4>
-#   <h1 style="align-self: end">{day.sheet_name}</h1>
-#   <h4 style="align-self: end">{day.guarantees}</h4>
-# </div>\n
-# """
+        summary_table.add_row(
+            [
+                day.get_week_day(),
+                f"{day.physical}/{day.psychical}",
+                day.get_specific_value(ProgramType.MORNING, "Název") or "",
+                day.get_specific_value(ProgramType.AFTERNOON, "Název") or "",
+                day.get_specific_value(ProgramType.EVENING, "Název") or "",
+                day.guarantees,
+            ]
+        )
         result += f"""
+{force_page_break()}
 <h1 style="text-align: center">{day.sheet_name} - {day.date.strftime('%d.%m.%Y')}</h1>
 <p style="text-align: center"><b>{day.guarantees}</b></p>\n
 """
         for program_type, day_part in day.parts.items():
             if day_part.values:
-                heading = f"{program_type.value} (CTH)" if day_part.cth else program_type.value
+                name = day_part.values.get("Název")
+                heading = f"{program_type.value}: {name}" if name else program_type.value
+                heading = f"{heading} (CTH)" if day_part.cth else heading
                 result += header(level=3, text=heading)
                 for key, value in day_part.values.items():
-                    formatted_value = value.replace("\n", "<br>").strip()
-                    result += list_item(f"**{key}**: {formatted_value}\n")
+                    if key != "Název":
+                        formatted_value = value.replace("\n", "<br>").strip()
+                        key = f"<span style='color: orange'>{key}</span>" if key == "Materiály" else key
+                        result += list_item(f"**{key}**: {formatted_value}\n")
 
     with open(output.joinpath("summary.md"), "w") as file:
         file.write(centered_header(level=1, text="Přehled") + summary_table.as_markdown() + result)
